@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue 3 Concepts</title>
+  <script src="https://unpkg.com/vue@3.2.20/dist/vue.global.prod.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- Conditional Rendering -->
+    <p v-if="showText">This text will show if showText is true.</p>
+    <p v-else>This text will show if showText is false.</p>
+    
+    <p v-show="showText">This text will be hidden if showText is false.</p>
+    
+    <ul>
+      <li v-for="item in items">{{ item }}</li>
+    </ul>
+    
+    <!-- v-if with v-for -->
+    <div v-for="item in items" v-if="item !== 'Skip'">{{ item }}</div>
+    
+    <!-- Form Input Handling -->
+    <div>
+      <input type="text" v-model="inputText" id="inputText">
+      <button @click="addText">Add Text</button>
+    </div>
+    
+    <ul>
+      <li v-for="item in items" :key="item">{{ item }}</li>
+    </ul>
+  </div>
+
+  <script>
+    const { createApp, ref } = Vue;
+
+    const app = createApp({
+      setup() {
+        const showText = ref(true);
+        const items = ref(['Item 1', 'Item 2', 'Item 3', 'Skip', 'Item 4']);
+        const inputText = ref('');
+
+        const addText = () => {
+          items.value.push(inputText.value);
+          inputText.value = ''; // Clear the input field
+        };
+
+        return { showText, items, inputText, addText };
+      }
+    });
+
+    app.mount('#app');
+  </script>
+</body>
+</html>
